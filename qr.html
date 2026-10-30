@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Create your birthday QR code</title>
+<style>
+body{margin:0;min-height:100vh;display:grid;place-items:center;background:#210b18;color:#fff1d7;font-family:Arial,sans-serif;padding:20px;box-sizing:border-box}
+main{max-width:520px;text-align:center;background:#351426;border:1px solid #b88a48;border-radius:20px;padding:28px;width:100%;box-sizing:border-box}
+h1{font-family:Georgia,serif;color:#f3d58e;font-weight:normal}p{line-height:1.6;color:#f4e6cc}
+#qr{background:white;padding:14px;display:inline-block;border-radius:10px;margin:14px auto;min-width:220px;min-height:220px}
+input{width:100%;padding:12px;border-radius:8px;border:1px solid #b88a48;box-sizing:border-box;margin:8px 0 14px;font-size:15px}
+button{padding:13px 20px;border:0;border-radius:30px;background:#e8c875;color:#351426;font-weight:bold;cursor:pointer;margin:5px}
+small{color:#d8c6a9}
+</style></head><body><main>
+<h1>Your Birthday QR Code</h1>
+<p>After uploading this folder to your hosting provider, open this page using your live website address. It will create a QR code that opens the surprise.</p>
+<label for="url">Live website URL</label><input id="url" type="url" placeholder="https://your-site.example" />
+<div id="qr"><small>QR code will appear here</small></div><br>
+<button id="make">Create QR code</button><button id="download">Download QR PNG</button>
+<p><small>Print the downloaded QR and place it on the gift card. Test it with another phone before gifting.</small></p>
+</main>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+<script>
+const input=document.getElementById('url'), holder=document.getElementById('qr');
+input.value=location.href.replace(/qr\.html.*$/,'').replace(/\/?$/,'/');
+function create(){let value=input.value.trim();if(!/^https?:\/\//i.test(value)){alert('Enter your full live website URL, beginning with https://');return}
+holder.innerHTML='';new QRCode(holder,{text:value,width:220,height:220,colorDark:'#160b10',colorLight:'#ffffff',correctLevel:QRCode.CorrectLevel.H});}
+document.getElementById('make').onclick=create;
+document.getElementById('download').onclick=()=>{const img=holder.querySelector('img'),canvas=holder.querySelector('canvas');let url=canvas?canvas.toDataURL('image/png'):img?.src;if(!url){alert('Create the QR code first.');return}const a=document.createElement('a');a.href=url;a.download='birthday-surprise-QR.png';a.click()};
+</script></body></html>
